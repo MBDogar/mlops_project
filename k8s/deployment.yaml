@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: height-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: height-app
+  template:
+    metadata:
+      labels:
+        app: height-app
+    spec:
+      containers:
+      - name: height-app
+        image: height-app:latest
+        ports:
+        - containerPort: 5000

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Height Predictor</title>
+</head>
+<body>
+    <h2>Predict Height</h2>
+    <form method="POST" action="/predict">
+        Age: <input type="number" name="age" required><br>
+        Weight: <input type="number" name="weight" required><br>
+        <input type="submit" value="Predict">
+    </form>
+    {% if prediction %}
+    <h3>Predicted Height: {{ prediction }} cm</h3>
+    {% endif %}
+</body>
+</html>
