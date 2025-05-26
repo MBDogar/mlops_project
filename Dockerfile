@@ -7,4 +7,4 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 
-CMD ["python3", "app.py"]
+CMD ["sh", "-c", "python3 train.py && python3 app.py"]
