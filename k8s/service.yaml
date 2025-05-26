@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: height-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: height-app
   ports:
