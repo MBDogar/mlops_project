@@ -1,33 +1,53 @@
-name: CD to Minikube on GCP VM
+name: Deploy to Minikube on GCP VM
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Deploy via SSH to GCP VM
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: 35.246.14.225
-          username: murtazabilalqasim@35.246.14.225
-          key: ${{ secrets.GCP_VM_SSH_KEY }}
-          script: |
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
+
+    - name: Install gcloud CLI
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        project_id: your-gcp-project-id
+
+    - name: SSH and deploy (inline script)
+      run: |
+        gcloud compute ssh murtazabilalqasim@l00187987-node1 \
+          --zone=us-central1-a \
+          --command="bash -c '
+            set -e
             cd mlops_project
+
+            echo Pulling latest code...
             git pull origin main
 
-            eval $(minikube docker-env)
+            echo Setting Docker env to Minikube...
+            eval \$(minikube docker-env)
 
+            echo Training model...
             python3 train.py
+
+            echo Building Docker image...
             docker build -t height-app:latest .
+
+            echo Loading image into Minikube...
             minikube image load height-app:latest
 
+            echo Deploying to Kubernetes...
             kubectl delete deployment height-app --ignore-not-found
             kubectl apply -f k8s/deployment.yaml
             kubectl apply -f k8s/service.yaml
+          '"
