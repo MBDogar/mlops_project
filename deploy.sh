@@ -8,7 +8,7 @@ echo "📂 Changing to project directory..."
 cd ~/mlops_project  # Adjust this path
 
 echo "🔍 Checking for Dockerfile..."
-test -f Dockerfile || { echo "❌ Dockerfile not found in $(pwd)"; exit 1; }
+test -f ~/mlops_project/Dockerfile || { echo "❌ Dockerfile not found in $(pwd)"; exit 1; }
 
 echo "🏗️ Running training script..."
 python3 train.py
