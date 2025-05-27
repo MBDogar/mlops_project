@@ -7,8 +7,8 @@ docker info | grep -i minikube || { echo "❌ Not using Minikube's Docker daemon
 echo "📂 Changing to project directory..."
 cd /home/murtazabilalqasim/mlops_project  # Adjust this path
 
-echo "🔍 Checking for Dockerfile..."
-test -f Dockerfile || { echo "❌ Dockerfile not found in $(pwd)"; exit 1; }
+#echo "🔍 Checking for Dockerfile..."
+#test -f Dockerfile || { echo "❌ Dockerfile not found in $(pwd)"; exit 1; }
 
 echo "🏗️ Running training script..."
 python3 train.py
