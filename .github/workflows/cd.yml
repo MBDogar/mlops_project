@@ -21,9 +21,9 @@ jobs:
     - name: Install gcloud CLI
       uses: google-github-actions/setup-gcloud@v1
       with:
-        project_id: healthy-highway-453410-r7
+        project_id: your-gcp-project-id
 
-    - name: SSH and run deploy script on VM
+    - name: SSH and deploy (inline script)
       run: |
         gcloud compute ssh murtazabilalqasim@l00187987-node1 \
           --zone=europe-west2-c \
