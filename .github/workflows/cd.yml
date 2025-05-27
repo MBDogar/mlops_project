@@ -16,7 +16,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: 35.246.14.225
-          username: murtazabilalqasim
+          username: murtazabilalqasim@35.246.14.225
           key: ${{ secrets.GCP_VM_SSH_KEY }}
           script: |
             cd mlops_project
