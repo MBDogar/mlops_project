@@ -5,7 +5,7 @@ echo "🧠 Verifying Docker is using Minikube..."
 docker info | grep -i minikube || { echo "❌ Not using Minikube's Docker daemon."; exit 1; }
 
 echo "📂 Changing to project directory..."
-cd /home/your-user/mlops_project  # Adjust this path
+cd /home/murtazabilalqasim/mlops_project  # Adjust this path
 
 echo "🔍 Checking for Dockerfile..."
 test -f Dockerfile || { echo "❌ Dockerfile not found in $(pwd)"; exit 1; }
