@@ -7,16 +7,22 @@ cd ~/mlops_project
 echo "deleting prone images"
 docker image prune -f
 
+echo "Deleting old Docker image (if exists)..."
+docker rmi height-app:latest || echo "Image not found, continuing..."
+
 echo ">>> Pulling latest code"
 git pull origin main
 
 echo ">>> Using Minikube Docker daemon"
 eval $(minikube -p minikube docker-env)
 
-echo ">>> Building Docker image (no cache)"
+echo "Training model..."
+python3 train.py
+
+echo "Building new Docker image..."
 docker build -t height-app:latest .
 
-echo ">>> Loading image into Minikube"
+echo "Loading image into Minikube..."
 minikube image load height-app:latest
 
 kubectl delete deployment height-app --ignore-not-found
