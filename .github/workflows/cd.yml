@@ -21,28 +21,10 @@ jobs:
     - name: Install gcloud CLI
       uses: google-github-actions/setup-gcloud@v1
       with:
-        project_id: your-gcp-project-id
+        project_id: healthy-highway-453410-r7
 
-    - name: SSH and deploy (inline script)
+    - name: SSH and run deploy script on VM
       run: |
         gcloud compute ssh murtazabilalqasim@l00187987-node1 \
           --zone=europe-west2-c \
-          --command="kubectl rollout restart deployment height-app" \
-          --command="bash -c '
-            set -e
-            cd mlops_project
-
-            echo Pulling latest code...
-            git pull origin main
-
-            echo Building Docker image...
-            docker build -t height-app:latest .
-
-            echo Loading image into Minikube...
-            minikube image load height-app:latest
-
-            echo Deploying to Kubernetes...
-            kubectl delete deployment height-app --ignore-not-found
-            kubectl apply -f k8s/deployment.yaml
-            kubectl apply -f k8s/service.yaml
-          '"
+          --command="bash /home/murtazabilalqasim/mlops_project/deploy.sh"
