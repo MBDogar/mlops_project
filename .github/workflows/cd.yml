@@ -1,20 +1,33 @@
-name: CD to Minikube
+name: CD to Minikube on GCP VM
+
 on:
   push:
     branches: [main]
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v2
-      - name: Build Docker image
-        run: docker build -t height-app:latest .
-      - name: Save and Load image to Minikube
-        run: |
-          minikube image load height-app:latest
-      - name: Deploy to Minikube
-        run: |
-          kubectl apply -f k8s/deployment.yaml
-          kubectl apply -f k8s/service.yaml
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy via SSH to GCP VM
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: 35.246.14.225
+          username: murtazabilalqasim
+          key: ${{ secrets.GCP_VM_SSH_KEY }}
+          script: |
+            cd mlops_project
+            git pull origin main
+
+            eval $(minikube docker-env)
+
+            python3 train.py
+            docker build -t height-app:latest .
+            minikube image load height-app:latest
+
+            kubectl delete deployment height-app --ignore-not-found
+            kubectl apply -f k8s/deployment.yaml
+            kubectl apply -f k8s/service.yaml
