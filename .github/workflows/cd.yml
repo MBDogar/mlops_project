@@ -37,9 +37,6 @@ jobs:
             echo Setting Docker env to Minikube...
             eval \$(minikube docker-env)
 
-            echo Training model...
-            python3 train.py
-
             echo Building Docker image...
             docker build -t height-app:latest .
 
