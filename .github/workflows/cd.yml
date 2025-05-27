@@ -27,6 +27,7 @@ jobs:
       run: |
         gcloud compute ssh murtazabilalqasim@l00187987-node1 \
           --zone=europe-west2-c \
+          --command="kubectl rollout restart deployment height-app" \
           --command="bash -c '
             set -e
             cd mlops_project
