@@ -66,6 +66,8 @@ if ! grep -q "imagePullPolicy: Never" k8s/deployment.yaml; then
   sed -i 's|imagePullPolicy:.*|imagePullPolicy: Never|' k8s/deployment.yaml || true
 fi
 
+kubectl delete deployment height-app --ignore-not-found
+
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 
