@@ -4,6 +4,7 @@ set -e
 echo ">>> Changing to project directory"
 cd ~/mlops_project
 
+echo "deleting prone images"
 docker image prune -f
 
 echo ">>> Pulling latest code"
@@ -13,7 +14,7 @@ echo ">>> Using Minikube Docker daemon"
 eval $(minikube -p minikube docker-env)
 
 echo ">>> Building Docker image (no cache)"
-docker build --no-cache -t height-app:latest .
+docker build -t height-app:latest .
 
 echo ">>> Loading image into Minikube"
 minikube image load height-app:latest
