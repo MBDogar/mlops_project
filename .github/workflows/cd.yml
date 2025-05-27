@@ -26,7 +26,7 @@ jobs:
     - name: SSH and deploy (inline script)
       run: |
         gcloud compute ssh murtazabilalqasim@l00187987-node1 \
-          --zone=us-central1-a \
+          --zone=europe-west2-c \
           --command="bash -c '
             set -e
             cd mlops_project
