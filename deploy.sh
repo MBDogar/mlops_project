@@ -5,10 +5,10 @@ echo "🧠 Verifying Docker is using Minikube..."
 docker info | grep -i minikube || { echo "❌ Not using Minikube's Docker daemon."; exit 1; }
 
 echo "📂 Changing to project directory..."
-cd /home/murtazabilalqasim/mlops_project  # Adjust this path
+cd ~/mlops_project  # Adjust this path
 
-#echo "🔍 Checking for Dockerfile..."
-#test -f Dockerfile || { echo "❌ Dockerfile not found in $(pwd)"; exit 1; }
+echo "🔍 Checking for Dockerfile..."
+test -f Dockerfile || { echo "❌ Dockerfile not found in $(pwd)"; exit 1; }
 
 echo "🏗️ Running training script..."
 python3 train.py
@@ -34,5 +34,13 @@ kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
 
 echo "✅ Deployment complete!"
+kubectl delete deployment height-app --ignore-not-found
+
+echo ">>> Applying Kubernetes manifests"
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+
+echo ">>> Restarting deployment"
+kubectl rollout restart deployment height-app
 
 echo ">>> Done"
