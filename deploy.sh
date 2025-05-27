@@ -18,6 +18,8 @@ minikube image load height-app:latest
 echo ">>> Confirming image is inside Minikube"
 minikube ssh -- docker images | grep height-app
 
+kubectl delete deployment height-app --ignore-not-found
+
 echo ">>> Applying Kubernetes configs"
 kubectl apply -f k8s/deployment.yaml
 kubectl apply -f k8s/service.yaml
