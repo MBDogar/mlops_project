@@ -34,9 +34,6 @@ jobs:
             echo Pulling latest code...
             git pull origin main
 
-            echo Setting Docker env to Minikube...
-            eval \$(minikube docker-env)
-
             echo Building Docker image...
             docker build -t height-app:latest .
 
