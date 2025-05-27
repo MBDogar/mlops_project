@@ -1,14 +1,23 @@
-echo "🌀 Switching to Minikube Docker environment..."
-eval $(minikube docker-env)
+#!/bin/bash
+set -e
 
-echo "🧠 Verifying Docker is using Minikube..."
-docker info | grep -i minikube || { echo "❌ Not using Minikube's Docker daemon."; exit 1; }
+echo ">>> Changing to project directory"
+cd ~/mlops_project
 
-echo "📂 Changing to project directory..."
-cd ~/mlops_project  # Adjust this path
+echo "deleting prone images"
+docker image prune -f
+
+echo "Deleting old Docker image (if exists)..."
+docker rmi height-app:latest || echo "Image not found, continuing..."
+
+echo ">>> Pulling latest code"
+git pull origin main
+
+echo ">>> Using Minikube Docker daemon"
+eval $(minikube -p minikube docker-env)
 
 echo "🔍 Checking for Dockerfile..."
-test -f ~/mlops_project/Dockerfile || { echo "❌ Dockerfile not found in $(pwd)"; exit 1; }
+test -f Dockerfile || { echo "❌ Dockerfile not found in $(pwd)"; exit 1; }
 
 echo "🏗️ Running training script..."
 python3 train.py
