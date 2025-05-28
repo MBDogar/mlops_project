@@ -24,7 +24,4 @@ kubectl set image deployment/height-app height-app=$TAG --record
 
 kubectl rollout restart deployment height-app
 
-echo "⏳ Waiting for rollout to finish..."
-kubectl rollout status deployment/height-app
-
 echo "✅ Done! New image: $TAG"
