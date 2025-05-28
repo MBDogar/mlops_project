@@ -3,9 +3,6 @@ set -e
 
 cd ~/mlops_project
 
-echo "🧼 Cleaning up..."
-docker image prune -f || true
-
 echo "📦 Training model..."
 python3 train.py
 
