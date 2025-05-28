@@ -4,9 +4,6 @@ set -e
 echo ">>> Changing to project directory"
 cd ~/mlops_project
 
-echo "🧼 Cleaning up old dangling Docker images"
-docker image prune -f
-
 echo ">>> Pulling latest code"
 git pull origin main
 
