@@ -1,31 +1,36 @@
 #!/bin/bash
 set -e
 
-echo ">>> Changing to project directory"
 cd ~/mlops_project
 
-echo ">>> Pulling latest code"
-git pull origin main
+echo "🧼 Cleaning up..."
+docker image prune -f || true
 
-echo "🐳 Using Minikube's Docker daemon"
-eval $(minikube -p minikube docker-env)
-
-echo "🧠 Training model"
+echo "📦 Training model..."
 python3 train.py
 
-echo "🏷️ Generating unique image tag"
+# Enable Minikube Docker daemon
+echo "🔁 Switching to Minikube Docker daemon..."
+eval $(minikube -p minikube docker-env)
+
+# Use unique image tag
 TAG="height-app:build-$(date +%s)"
-echo "🧱 Building Docker image with tag $TAG"
+echo "🏗️ Building image: $TAG"
 docker build -t $TAG .
 
-echo "📤 Loading image into Minikube"
+# Load image into Minikube
+echo "📤 Loading image into Minikube..."
 minikube image load $TAG
 
-echo "🛠️ Updating Kubernetes deployment to use image: $TAG"
-kubectl set image deployment/height-app height-app=$TAG --record || {
-    echo "⛔ Deployment not found, creating a new one..."
-    kubectl apply -f k8s/deployment.yaml
-    kubectl set image deployment/height-app height-app=$TAG --record
-}
+# Apply manifests (if not already present)
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
 
-echo "✅ Deployment updated successfully"
+# Update deployment with new image
+echo "🛠️ Updating Kubernetes deployment with image $TAG"
+kubectl set image deployment/height-app height-app=$TAG --record
+
+echo "⏳ Waiting for rollout to finish..."
+kubectl rollout status deployment/height-app
+
+echo "✅ Done! New image: $TAG"

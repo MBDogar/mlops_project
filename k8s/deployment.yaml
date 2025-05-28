@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: height-app
-        image: kubectl set image deployment/height-app height-app=$IMAGE --record
+        image: height-app:placeholder
         imagePullPolicy: Never
         ports:
         - containerPort: 5000
