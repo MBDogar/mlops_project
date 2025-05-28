@@ -30,6 +30,8 @@ kubectl apply -f k8s/service.yaml
 echo "🛠️ Updating Kubernetes deployment with image $TAG"
 kubectl set image deployment/height-app height-app=$TAG --record
 
+kubectl rollout restart deployment height-app
+
 echo "⏳ Waiting for rollout to finish..."
 kubectl rollout status deployment/height-app
 
