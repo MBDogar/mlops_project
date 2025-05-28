@@ -15,6 +15,6 @@ spec:
       containers:
       - name: height-app
         image: height-app:placeholder
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 5000
