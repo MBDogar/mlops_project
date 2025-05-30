@@ -4,7 +4,7 @@ import requests
 import json
 
 def test_predict_api():
-    url = "http://127.0.0.1:5000/predict"  # or your IP/port
+    url = "http://10.106.32.20:5000/predict"  # or your IP/port
     payload = {
         "age": 30,
         "weight": 75
