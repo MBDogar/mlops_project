@@ -16,9 +16,9 @@ minikube image load height-app:latest
 
 # Apply manifests (if not already present)
 
-/usr/local/bin/minikube kubectl -- delete -f ./deployment.yml || true
+/usr/local/bin/minikube kubectl -- delete -f k8s/deployment.yml || true
 sleep 5
-/usr/local/bin/minikube kubectl -- apply -f ./deployment.yml 
+/usr/local/bin/minikube kubectl -- apply -f k8s/deployment.yml 
 
 # Update deployment with new image
 echo "🛠️ Updating Kubernetes deployment with image latest"
