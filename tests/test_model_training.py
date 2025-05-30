@@ -1,15 +1,25 @@
-# tests/test_model.py
+# tests/test_flask_api.py
 
-import sys
-import os
+import pytest
+from app import app  # adjust import to your Flask app module
 
-# Add the parent directory to sys.path so model.py can be imported
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+@pytest.fixture
+def client():
+    with app.test_client() as client:
+        yield client
 
-from model import load_data, train_model, evaluate_model
+def test_predict(client):
+    # Prepare form data
+    form_data = {
+        'age': '30',
+        'weight': '70'
+    }
 
-def test_accuracy():
-    X_train, X_test, y_train, y_test = load_data()
-    model = train_model(X_train, y_train)
-    mse = evaluate_model(model, X_test, y_test)
-    assert mse < 100
+    # POST to /predict with form data
+    response = client.post('/predict', data=form_data)
+
+    # Assert the response is successful
+    assert response.status_code == 200
+
+    # Assert the response HTML contains the predicted value (rounded)
+    assert b'800.86' in response.data  # bytes literal since response.data is bytes
