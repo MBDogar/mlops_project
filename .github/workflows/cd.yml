@@ -51,6 +51,6 @@ jobs:
               rm -rf mlops_project && \
               git clone https://github.com/MBDogar/mlops_project.git && \
               cd mlops_project/k8s && \
-              /usr/local/bin/minikube kubectl -- delete -f /home/murtazabilalqasim/mlops_project/k8s/deployment.yml || true && \
+              /usr/local/bin/minikube kubectl -- delete -f ./deployment.yaml || true && \
               sleep 5 && \
-              /usr/local/bin/minikube kubectl -- apply -f /home/murtazabilalqasim/mlops_project/k8s/deployment.yml"
+              /usr/local/bin/minikube kubectl -- apply -f ./deployment.yaml"
