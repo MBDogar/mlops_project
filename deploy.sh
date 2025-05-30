@@ -12,16 +12,11 @@ docker build -t height-app:latest .
 echo "📤 Loading image into Minikube..."
 minikube image load height-app:latest
 
-/usr/local/bin/minikube/kubectl delete deployment height-app
+# Optional: delete old deployment (ignore error if not found)
+/usr/local/bin/minikube/kubectl delete deployment height-app || true
 
-# Apply manifests (if not already present)
+# Apply manifests
 /usr/local/bin/minikube/kubectl apply -f k8s/deployment.yaml
 /usr/local/bin/minikube/kubectl apply -f k8s/service.yaml
 
-# Update deployment with new image
-#echo "🛠️ Updating Kubernetes deployment with image $TAG"
-#/usr/local/bin/minikube/kubectl set image deployment/height-app height-app=$TAG --record
-
-#kubectl rollout restart deployment height-app
-
-echo "✅ Done! New image: $TAG"
+echo "✅ Done! Image used: height-app:latest"
