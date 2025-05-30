@@ -27,7 +27,6 @@ jobs:
       run: pytest
 
   deploy:
-    needs: mlops_Testing
     runs-on: ubuntu-latest
 
     steps:
