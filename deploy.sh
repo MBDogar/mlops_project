@@ -3,6 +3,8 @@ set -e
 
 cd ~/mlops_project
 
+git pull origin main
+
 # Use unique image tag
 TAG="height-app:build-$(date +%s)"
 echo "🏗️ Building image: $TAG"
