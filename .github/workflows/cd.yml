@@ -47,9 +47,10 @@ jobs:
         gcloud compute ssh murtazabilalqasim@l00187987-node1 \
           --zone=europe-west2-c \
           --command="
+              cd /home/l00187422/mlops && \
               rm -rf mlops_project && \
               git clone https://github.com/MBDogar/mlops_project.git && \
               cd mlops_project/k8s && \
-              /usr/local/bin/minikube kubectl -- delete -f k8/deployment.yml || true && \
+              /usr/local/bin/minikube kubectl -- delete -f ./deployment.yml || true && \
               sleep 5 && \
-              /usr/local/bin/minikube kubectl -- apply -f k8/deployment.yml"
+              /usr/local/bin/minikube kubectl -- apply -f ./deployment.yml"
