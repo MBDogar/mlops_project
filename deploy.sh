@@ -21,4 +21,6 @@ minikube image load height-app:latest
 /usr/local/bin/minikube kubectl -- apply -f k8s/deployment.yaml
 /usr/local/bin/minikube kubectl -- apply -f k8s/service.yaml
 
+/usr/local/bin/minikube kubectl -- rollout restart deployment height-app
+
 echo "✅ Done! Image used: height-app:latest"
