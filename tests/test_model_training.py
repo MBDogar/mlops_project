@@ -3,7 +3,9 @@ import numpy as np
 
 def test_model_prediction():
     # Load your trained model
-    model = joblib.load('model.joblib')
+    model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'model.joblib'))
+    model = joblib.load(model_path)
+    #model = joblib.load('model.joblib')
 
     # Prepare example input data (age, weight)
     X_test = np.array([[30, 70]])
