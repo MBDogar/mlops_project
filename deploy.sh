@@ -16,15 +16,17 @@ docker build -t height-app:latest .
 echo "📤 Loading image into Minikube..."
 minikube image load height-app:latest
 
-/usr/local/bin/minikube/kubectl delete deployment height-app
+/usr/local/bin/minikube kubectl delete deployment height-app
 
 # Apply manifests (if not already present)
-/usr/local/bin/minikube/kubectl apply -f k8s/deployment.yaml
-/usr/local/bin/minikube/kubectl apply -f k8s/service.yaml
+
+/usr/local/bin/minikube kubectl -- delete -f ./deployment.yml || true
+sleep 5
+/usr/local/bin/minikube kubectl -- apply -f ./deployment.yml 
 
 # Update deployment with new image
 echo "🛠️ Updating Kubernetes deployment with image latest"
-/usr/local/bin/minikube/kubectl set image deployment/height-app height-app:latest
+/usr/local/bin/minikube kubectl set image deployment/height-app height-app:latest
 
 kubectl rollout restart deployment height-app
 
