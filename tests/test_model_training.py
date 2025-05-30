@@ -3,6 +3,7 @@ import pandas as pd
 import os
 from sklearn.linear_model import LinearRegression
 from model import load_data, train_model, evaluate_model
+import joblib # Add this line
 
 # Fixture to create a dummy health_data.csv for testing
 @pytest.fixture(scope='module')
