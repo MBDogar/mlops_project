@@ -21,7 +21,7 @@ jobs:
       run: python model.py
 
     - name: Run tests
-      run: pytest tests/test_model_training.py
+      run: pytest tests/test_flask_api.py
 
     - name: Run unit tests
       run: pytest
