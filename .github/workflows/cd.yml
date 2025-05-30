@@ -17,6 +17,11 @@ jobs:
     - name: Install dependencies
       run: pip install -r requirements.txt
 
+    - name: Install dependencies
+      run: |
+          pip install -r requirements.txt # Assuming you have this
+          pip install pytest pytest-flask pandas scikit-learn joblib
+
     - name: build joblib
       run: python model.py
 
