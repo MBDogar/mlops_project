@@ -1,6 +1,11 @@
-import sys
-import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from unittest.mock import patch
+import pytest
+
+@pytest.fixture(autouse=True)
+def mock_model_load():
+    with patch('app.joblib.load') as mock_load:
+        mock_load.return_value = None  # or a dummy object as needed
+        yield
 
 from app import app
 
