@@ -12,7 +12,7 @@ docker build -t height-app:latest .
 echo "📤 Loading image into Minikube..."
 minikube image load height-app:latest
 
-/usr/local/bin/minikube kubectl delete deployment height-app
+#/usr/local/bin/minikube kubectl delete deployment height-app
 
 # Apply manifests (if not already present)
 
