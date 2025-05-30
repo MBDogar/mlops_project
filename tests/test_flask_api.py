@@ -1,5 +1,5 @@
 import pytest
-from your_flask_app import app  # import your Flask app object
+from app import app 
 
 def test_api():
     client = app.test_client()
