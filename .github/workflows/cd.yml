@@ -47,7 +47,7 @@ jobs:
         gcloud compute ssh murtazabilalqasim@l00187987-node1 \
           --zone=europe-west2-c \
           --command="
-              cd /home/l00187422/mlops && \
+              cd /home/murtazabilalqasim/ && \
               rm -rf mlops_project && \
               git clone https://github.com/MBDogar/mlops_project.git && \
               cd mlops_project/k8s && \
