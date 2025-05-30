@@ -2,7 +2,6 @@ import sys
 import os
 
 def test_flask_predict():
-    with app.test_client() as client:
         #app.testing = True
         #response = client.post('/api/predict', json={"age": 30, "weight": 75})
         #assert response.status_code == 200
