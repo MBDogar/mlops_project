@@ -2,6 +2,13 @@ from flask import Flask, request, jsonify, render_template
 import joblib
 import numpy as np
 
+import os
+import joblib
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(BASE_DIR, 'model.joblib')
+model = joblib.load(model_path)
+
 app = Flask(__name__)
 model = joblib.load('model.joblib')
 
