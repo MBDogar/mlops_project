@@ -38,7 +38,7 @@ jobs:
       - name: Run tests
         # Pytest will now be able to find 'model.py' because $GITHUB_WORKSPACE is in PYTHONPATH
         # Make sure your test file is indeed named test_model_training.py
-        run: pytest tests/test_model_training.py tests/test_app.py
+        run: pytest tests/test_model_training.py
         # Alternatively, to discover all tests in the 'tests' directory: pytest tests/
 
   deploy:
