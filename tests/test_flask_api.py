@@ -20,4 +20,4 @@ def test_flask_predict():
         assert response.status_code == 200
         data = response.get_json()
         assert "prediction" in data
-        assert data["prediction"] == 800.86  # Rounded value
+        assert data["prediction"] == 800.86
