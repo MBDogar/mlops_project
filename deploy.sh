@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
 
-rm -r mlops_project
-
-git clone https://github.com/MBDogar/mlops_project.git
-
 cd ~/mlops_project
 
 # Use unique image tag
