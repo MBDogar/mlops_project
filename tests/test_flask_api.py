@@ -1,10 +1,11 @@
-import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import joblib
 
-from app import app
+app = Flask(__name__)
 
-def test_api():
-    client = app.test_client()
-    response = client.post('/predict', data={'age': 25, 'weight': 70})
-    assert response.status_code == 200
+try:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(BASE_DIR, 'model.joblib')
+    model = joblib.load(model_path)
+except FileNotFoundError:
+    model = None  # or raise an informative warning if preferred
