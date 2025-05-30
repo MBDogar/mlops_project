@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
       - name: height-app
-        image: height-app:placeholder
-        imagePullPolicy: Never
+        image: height-app:latest
         ports:
         - containerPort: 5000

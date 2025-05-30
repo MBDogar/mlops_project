@@ -1,27 +1,31 @@
 #!/bin/bash
 set -e
 
+rm -r mlops_project
+
+git clone https://github.com/MBDogar/mlops_project.git
+
 cd ~/mlops_project
 
 # Use unique image tag
 TAG="height-app:build-$(date +%s)"
-echo "🏗️ Building image: $TAG"
-docker build -t $TAG .
+echo "🏗️ Building image:latest"
+docker build -t height-app:latest .
 
 # Load image into Minikube
 echo "📤 Loading image into Minikube..."
-minikube image load $TAG
+minikube image load height-app:latest
 
-kubectl delete deployment height-app
+/usr/local/bin/minikube/kubectl delete deployment height-app
 
 # Apply manifests (if not already present)
-kubectl apply -f k8s/deployment.yaml
-kubectl apply -f k8s/service.yaml
+/usr/local/bin/minikube/kubectl apply -f k8s/deployment.yaml
+/usr/local/bin/minikube/kubectl apply -f k8s/service.yaml
 
 # Update deployment with new image
-echo "🛠️ Updating Kubernetes deployment with image $TAG"
-kubectl set image deployment/height-app height-app=$TAG --record
+echo "🛠️ Updating Kubernetes deployment with image latest"
+/usr/local/bin/minikube/kubectl set image deployment/height-app height-app:latest
 
 kubectl rollout restart deployment height-app
 
-echo "✅ Done! New image: $TAG"
+echo "✅ Done! New image: latest"
