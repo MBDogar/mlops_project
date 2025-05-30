@@ -1,24 +1,16 @@
 # tests/test_flask_api.py
-
-import requests
 import json
+from app import app  # Import your Flask app
 
-def test_predict_api():
-    url = "http://10.106.32.20:5000/predict"  # or your IP/port
-    payload = {
-        "age": 30,
-        "weight": 75
-    }
-    headers = {
-        "Content-Type": "application/json"
-    }
-
-    response = requests.post(url, data=json.dumps(payload), headers=headers)
-
-    # Make sure API returns 200
-    assert response.status_code == 200
-
-    # Make sure response contains a prediction
-    data = response.json()
-    assert "prediction" in data
-    assert isinstance(data["prediction"], (int, float))
+def test_predict_route():
+    with app.test_client() as client:
+        payload = {
+            "age": 30,
+            "weight": 75
+        }
+        response = client.post('/predict', data=json.dumps(payload), content_type='application/json')
+        
+        assert response.status_code == 200
+        data = response.get_json()
+        assert "prediction" in data
+        assert isinstance(data["prediction"], (float, int))
