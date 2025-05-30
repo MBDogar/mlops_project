@@ -21,9 +21,9 @@ sleep 5
 /usr/local/bin/minikube kubectl -- apply -f k8s/deployment.yml 
 
 # Update deployment with new image
-echo "🛠️ Updating Kubernetes deployment with image latest"
-/usr/local/bin/minikube kubectl set image deployment/height-app height-app:latest
+#echo "🛠️ Updating Kubernetes deployment with image latest"
+#/usr/local/bin/minikube kubectl set image deployment/height-app height-app:latest
 
-kubectl rollout restart deployment height-app
+#kubectl rollout restart deployment height-app
 
 echo "✅ Done! New image: latest"
