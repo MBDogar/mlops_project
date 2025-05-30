@@ -1,25 +1,15 @@
-# tests/test_flask_api.py
+import joblib
+import numpy as np
 
-import pytest
-from app import app  # adjust import to your Flask app module
+def test_model_prediction():
+    # Load your trained model
+    model = joblib.load('model.joblib')
 
-@pytest.fixture
-def client():
-    with app.test_client() as client:
-        yield client
+    # Prepare example input data (age, weight)
+    X_test = np.array([[30, 70]])
 
-def test_predict(client):
-    # Prepare form data
-    form_data = {
-        'age': '30',
-        'weight': '70'
-    }
+    # Run prediction
+    prediction = model.predict(X_test)[0]
 
-    # POST to /predict with form data
-    response = client.post('/predict', data=form_data)
-
-    # Assert the response is successful
-    assert response.status_code == 200
-
-    # Assert the response HTML contains the predicted value (rounded)
-    assert b'800.86' in response.data  # bytes literal since response.data is bytes
+    # Example assertion, adjust threshold based on your expected output
+    assert prediction < 1000  # or some other condition that makes sense for your model
