@@ -15,7 +15,7 @@ echo "📤 Loading image into Minikube..."
 minikube image load height-app:latest
 
 # Optional: delete old deployment (ignore error if not found)
-/usr/local/bin/minikube kubectl -- delete deployment height-app || true
+/usr/local/bin/minikube kubectl -- delete deployments height-app
 
 # Apply manifests
 /usr/local/bin/minikube kubectl -- apply -f k8s/deployment.yaml
