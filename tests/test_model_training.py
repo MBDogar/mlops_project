@@ -1,15 +1,24 @@
-import os
-import joblib
-import numpy as np
+# tests/test_flask_api.py
 
-def test_model_prediction():
-    model_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'model.joblib'))
+import requests
+import json
 
-    assert os.path.exists(model_path), f"❌ model.joblib not found at: {model_path}. Did you forget to run model.py?"
+def test_predict_api():
+    url = "http://127.0.0.1:5000/predict"  # or your IP/port
+    payload = {
+        "age": 30,
+        "weight": 75
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
 
-    model = joblib.load(model_path)
+    response = requests.post(url, data=json.dumps(payload), headers=headers)
 
-    X_test = np.array([[30, 70]])
-    prediction = model.predict(X_test)[0]
+    # Make sure API returns 200
+    assert response.status_code == 200
 
-    assert prediction < 1000
+    # Make sure response contains a prediction
+    data = response.json()
+    assert "prediction" in data
+    assert isinstance(data["prediction"], (int, float))
