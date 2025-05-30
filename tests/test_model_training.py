@@ -1,14 +1,11 @@
-# tests/test_flask_api.py
-import json
 import sys
 import os
+import json
 
-# Add the parent directory of 'tests' to the path
+# Add app.py's directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from app import app  # Now this should work
-
-
+from app import app
 
 def test_predict_route():
     with app.test_client() as client:

@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
         python-version: '3.9'
     - name: Install dependencies
@@ -22,6 +22,9 @@ jobs:
 
     - name: Run tests
       run: pytest tests/test_model_training.py
+
+    - name: Run unit tests
+      run: pytest
 
   deploy:
     needs: mlops_Testing
