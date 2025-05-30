@@ -5,7 +5,7 @@ import numpy as np
 
 app = Flask(__name__)
 
-# Safe model loading
+# Try loading the model safely
 try:
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     model_path = os.path.join(BASE_DIR, 'model.joblib')
@@ -19,10 +19,17 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    age = float(request.form['age'])
-    weight = float(request.form['weight'])
+    if request.is_json:
+        # If JSON payload is received
+        content = request.get_json()
+        age = float(content['age'])
+        weight = float(content['weight'])
+    else:
+        # If form data is received
+        age = float(request.form['age'])
+        weight = float(request.form['weight'])
 
-    # Use dummy prediction if model is None
+    # Use model if available, else fallback
     if model:
         prediction = model.predict(np.array([[age, weight]]))[0]
     else:
