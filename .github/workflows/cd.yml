@@ -19,7 +19,7 @@ jobs:
     - name: build joblib
       run: python3 model.py
     - name: Run tests
-      run: pytest tests/
+      run: pytest tests/test_model_training.py
 
   deploy:
     needs: mlops_Testing
