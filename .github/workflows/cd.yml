@@ -30,7 +30,7 @@ jobs:
 
       - name: Build and push Docker image with tags
         run: |
-          IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/iris-api
+          IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/height-api
           SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
 
           docker build -t $IMAGE_NAME:latest \
@@ -46,7 +46,6 @@ jobs:
         gcloud compute ssh murtazabilalqasim@l00187987-node1 \
           --zone=europe-west2-c \
           --command="
-              cd /home/murtazabilalqasim/mlops && \
               rm -rf mlops_project && \
               git clone https://github.com/MBDogar/mlops_project.git && \
               cd mlops_project/k8s && \
