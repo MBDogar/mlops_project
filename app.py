@@ -13,8 +13,7 @@ def index():
 def predict():
     age = float(request.form['age'])
     weight = float(request.form['weight'])
-    #prediction = model.predict(np.array([[age, weight]]))[0]
-    prediction = 555
+    prediction = model.predict(np.array([[age, weight]]))[0]
     return render_template('index.html', prediction=round(prediction, 2))
 
 if __name__ == '__main__':
