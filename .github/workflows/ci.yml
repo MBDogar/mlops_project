@@ -7,15 +7,37 @@ on:
       - Dev
 
     jobs:
-      build:
+      mlops_Testing:
         runs-on: ubuntu-latest
         steps:
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v3 # Checks out your repository code
           - name: Set up Python
-            uses: actions/setup-python@v2
+            uses: actions/setup-python@v4
             with:
-              python-version: '3.9'
+              python-version: '3.9' # Or your desired Python version
+
           - name: Install dependencies
-            run: pip install -r requirements.txt
+            run: |
+              pip install pytest pytest-flask pandas scikit-learn joblib
+              # If you have a requirements.txt, use: pip install -r requirements.txt
+
+          - name: Create dummy health_data.csv for tests
+            # This creates the necessary data file for model.py to function during tests
+            run: |
+              echo "age,weight,height" > health_data.csv
+              echo "25,70,175" >> health_data.csv
+              echo "30,75,180" >> health_data.csv
+              echo "22,65,170" >> health_data.csv
+              echo "35,80,185" >> health_data.csv
+              echo "28,72,178" >> health_data.csv
+
+          - name: Set PYTHONPATH
+            # This command adds the root of your repository to Python's search path.
+            # $GITHUB_WORKSPACE points to /home/runner/work/mlops_project/mlops_project/
+            run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
           - name: Run tests
+            # Pytest will now be able to find 'model.py' because $GITHUB_WORKSPACE is in PYTHONPATH
+            # Make sure your test file is indeed named test_model_training.py
             run: pytest tests/test_model_training.py
+            # Alternatively, to discover all tests in the 'tests' directory: pytest tests/
